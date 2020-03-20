@@ -19,8 +19,8 @@ def ezdiff(rt,correct,s=1.0):
         pc=1 - 1/(2*len(correct))
     if pc==0.5:
         pc=0.5 + 1/(2*len(correct))
-    MRT=numpy.mean(rt[correct==1])
-    VRT=numpy.var(rt[correct==1])
+    MRT=numpy.mean(rt)/1000 #from millisecond to second
+    VRT=numpy.var(rt)/1000**2 #from squared millisecond to squared second
 
     assert VRT > 0
     
@@ -30,5 +30,5 @@ def ezdiff(rt,correct,s=1.0):
     y=(-1*v*a)/(s**2)
     MDT=(a/(2*v))*((1-numpy.exp(y))/(1+numpy.exp(y)))
     t=MRT-MDT
-    
-    return([a,v,t])
+
+    return([MRT,VRT,pc,a,v,t])
